@@ -1,3 +1,4 @@
+import { DataBody } from './../models/dataBody.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -6,10 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class JobRecommendationService {
-  private BaseUrl = '';
+  private BaseUrl = '127.0.0.1:5000/';
   constructor(private _http:HttpClient) { }
 
-  findJobREcoomendation(dataForm:any):Observable<any>{
-    return this._http.post('',dataForm)
+  findJobREcoomendation(dataForm:DataBody):Observable<any>{
+    return this._http.post(this.BaseUrl + 'job',dataForm)
   }
 }

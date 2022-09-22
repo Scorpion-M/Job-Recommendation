@@ -1,0 +1,20 @@
+.parent{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    gap:20px;
+    .child-row{
+        display: flex;
+        justify-content: space-around;
+        .field{
+            display: flex;
+            flex-direction: column;
+        }      
+    }
+
+}
+.submit-btn{
+    display: flex;
+    justify-content: flex-end;
+    margin-block-start: 30px;
+}

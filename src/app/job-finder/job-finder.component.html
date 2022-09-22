@@ -1,27 +1,47 @@
-<h5>Job-Finder</h5>
+<h1>Job-Finder</h1>
 <p-fieldset legend="Job-Recommendation" [toggleable]="true">
-    <div class="field">
-        <label for="a1" class="block">A1</label>
-        <input id="a1" type="username"  pInputText />
+  <form [formGroup]="jobFinderForm">
+    <div class="parent">
+      <div class="child-row">
+        <div class="field">
+          <label for="a1" class="block">A1</label>
+          <input id="a1" type="username" formControlName="a1" pInputText />
+        </div>
+        <div class="field">
+          <label for="a2" class="block">A2</label>
+          <input id="a2" type="username" formControlName="a2" pInputText />
+        </div>
+        <div class="field">
+          <label for="a3" class="block">A3</label>
+          <input id="a3" type="username" formControlName="a3" pInputText />
+        </div>
+      </div>
+      <div class="child-row">
+        <div class="field">
+          <label for="a4" class="block">A4</label>
+          <input id="a4" type="username" formControlName="a4" pInputText />
+        </div>
+        <div class="field">
+          <label for="a5" class="block">A5</label>
+          <input id="a5" type="username" formControlName="a5" pInputText />
+        </div>
+        <div class="field">
+          <label for="tweets" class="block">Tweets</label>
+          <input
+            id="tweets"
+            type="username"
+            formControlName="tweets"
+            pInputText
+          />
+        </div>
+      </div>
     </div>
-    <div class="field">
-        <label for="a2" class="block">A2</label>
-        <input id="a2" type="username"  pInputText />
-    </div>
-    <div class="field">
-        <label for="a3" class="block">A3</label>
-        <input id="a3" type="username"  pInputText />
-    </div>
-    <div class="field">
-        <label for="a4" class="block">A4</label>
-        <input id="a4" type="username"  pInputText />
-    </div>
-    <div class="field">
-        <label for="a5" class="block">A5</label>
-        <input id="a5" type="username"  pInputText />
-    </div>
-    <div class="field">
-        <label for="tweets" class="block">Tweets</label>
-        <input id="tweets" type="username"  pInputText />
-    </div>
+  </form>
+  <div class="submit-btn">
+    <p-button label="Submit" icon="pi pi-check" (click)="findJobRecomendation()"></p-button>
+  </div>
 </p-fieldset>
+
+<p-panel header="Header" *ngIf="job_recommedation">
+  <p>{{ job_recommedation }}</p>
+</p-panel>

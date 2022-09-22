@@ -6,7 +6,8 @@ const routes: Routes = [
   {
     path:'job-finder',
     component:JobFinderComponent
-  }
+  },
+  { path: '',   redirectTo: '/job-finder', pathMatch: 'full' },
 ];
 
 @NgModule({
