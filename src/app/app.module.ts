@@ -1,4 +1,3 @@
-import { JobFinderComponent } from './job-finder/job-finder.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
@@ -11,13 +10,14 @@ import {ButtonModule} from 'primeng/button'
 import {PanelModule} from 'primeng/panel'
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatchingAlgoComponent } from './matching-algo/matching-algo.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    JobFinderComponent
+    MatchingAlgoComponent
   ],
   imports: [
     CommonModule,

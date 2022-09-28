@@ -1,13 +1,13 @@
-import { JobFinderComponent } from './job-finder/job-finder.component';
+import { MatchingAlgoComponent } from './matching-algo/matching-algo.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path:'job-finder',
-    component:JobFinderComponent
+    path:'matching-algo',
+    component:MatchingAlgoComponent
   },
-  { path: '',   redirectTo: '/job-finder', pathMatch: 'full' },
+  { path: '',   redirectTo: '/matching-algo', pathMatch: 'full' },
 ];
 
 @NgModule({

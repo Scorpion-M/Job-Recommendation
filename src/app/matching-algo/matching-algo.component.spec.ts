@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JobFinderComponent } from './job-finder.component';
+import { MatchingAlgoComponent } from './matching-algo.component';
 
-describe('JobFinderComponent', () => {
-  let component: JobFinderComponent;
-  let fixture: ComponentFixture<JobFinderComponent>;
+describe('MatchingAlgoComponent', () => {
+  let component: MatchingAlgoComponent;
+  let fixture: ComponentFixture<MatchingAlgoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ JobFinderComponent ]
+      declarations: [ MatchingAlgoComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(JobFinderComponent);
+    fixture = TestBed.createComponent(MatchingAlgoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
