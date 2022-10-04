@@ -1,9 +1,10 @@
+import { HELPERS } from './../constant/constant';
 import { Component, OnInit } from '@angular/core';
 import getPreciseDistance from 'geolib/es/getPreciseDistance';
 import { CUSTOMER, DRIVERS } from '../constant/constant';
-import { Vehicle } from '../Helper/Enums';
 import { Customer } from '../models/customer.model';
 import { Driver } from '../models/driver.model';
+import { Helper } from '../models/helper.model';
 
 @Component({
   selector: 'app-matching-algo',
@@ -15,13 +16,16 @@ export class MatchingAlgoComponent implements OnInit {
 
   customer:Customer = CUSTOMER;
   drivers:Driver[] = DRIVERS;
-  nearestDriver:Driver[] = [];
+  helpers:Helper[] = HELPERS;
+  nearestDrivers:Driver[] = [];
+  nearestHelpers:Driver[] = [];
 
   constructor() {
     
    }
   ngOnInit(): void {
-    this.nearestDriver = this.findTheNearest_N_Driver(this.customer,this.drivers,2);
+    this.nearestDrivers = this.findTheNearest_N_Driver_Helper(this.customer,this.drivers,2);
+    this.nearestHelpers = this.findTheNearest_N_Driver_Helper(this.customer,this.helpers,this.customer.helpers);
   }
   
 
@@ -37,16 +41,19 @@ export class MatchingAlgoComponent implements OnInit {
    * 3- sort available drivers by distance between driver location and start location of cutsomer's job
    * 4- retun N number of nearest Drivers
    */
-  findTheNearest_N_Driver(customer:Customer,drivers:Driver[],numberOfDrivers:number):Driver[]{
+  findTheNearest_N_Driver_Helper(customer:Customer,drivers:(Driver|Helper)[],numberOfDrivers:number):(Driver|Helper)[]{
     let nearestAvailbeDrivers:Driver[] = [];
-
-    let availableDrivers = drivers.filter(driver =>  
-      this.matchDriverDatesOrTimes(driver.availableDates,customer.date)
-      && this.matchDriverDatesOrTimes(driver.availableTimes,customer.startTime));
+    debugger
+    let availableDrivers = drivers.filter(driver =>
+       
+      this.matchDriverOrHelperTime(driver,customer) 
+      && this.matchDriverOrHelperDate(driver.availableDate,customer.jobDate) 
+      && customer.vehicle == driver.vehicleSize
+      );
       
       if(availableDrivers.length > 0){
         nearestAvailbeDrivers = this.sortAvailableByDistance(availableDrivers,customer);
-        nearestAvailbeDrivers = this.sliceByN<Driver>(nearestAvailbeDrivers,numberOfDrivers);
+        nearestAvailbeDrivers = this.sliceByN<Driver|Helper>(nearestAvailbeDrivers,numberOfDrivers);
       }
       
       return nearestAvailbeDrivers;
@@ -60,8 +67,25 @@ export class MatchingAlgoComponent implements OnInit {
      * @returns {boolean} true if customer date in list of driver dates list.
      * @Description check customer time/Date if equal one of the date in driver date list
      */
-    matchDriverDatesOrTimes(datesOrTime:Date[],customerDate:Date):boolean{
-      return datesOrTime.some(date => date.getTime() == customerDate.getTime());
+    matchDriverOrHelperDate(helperOrDriverDate:Date,customerDate:Date):boolean{
+      return helperOrDriverDate.getTime() == customerDate.getTime();
+    }
+
+    /**
+     * 
+     * @param {Driver | Helper} helperOrDriver 
+     * @param {Customer} customer 
+     * @returns {boolean} 
+     * @Description check jobStartTime for customer and add  jobDuration to startTime,
+     * in order to know the time need to do the job, then the time should be greater than or equal 
+     * to start shift of helper or driver or less than or equal end shift of helper or driver
+     */
+    matchDriverOrHelperTime(helperOrDriver:Driver | Helper,customer:Customer):boolean{
+      let jobDurationTime = new Date(customer.JobStartTime);
+      jobDurationTime.setMinutes(customer.jobDuration)
+      
+      return (helperOrDriver.startAvailableTime.getTime() <= jobDurationTime.getTime()
+      && helperOrDriver.endAvailableTime.getTime() >= jobDurationTime.getTime())
     }
   /**
    * 
